@@ -86,6 +86,12 @@ class RougeCalculator():
             result += min(v, reference_ngrams[k])
         return result
 
+    def rouge_1(self, summary, references, alpha=0.5):
+        return self.rouge_n(summary, references, 1, alpha)
+
+    def rouge_2(self, summary, references, alpha=0.5):
+        return self.rouge_n(summary, references, 2, alpha)
+
     def rouge_n(self, summary, references, n, alpha=0.5):
         """
         alpha: alpha -> 0: recall is more important
@@ -94,14 +100,15 @@ class RougeCalculator():
         """
         _summary = self.tokenize(summary)
         summary_ngrams = self.count_ngrams(_summary, n)
+        _refs = [references] if isinstance(references, str) else references
         matches = 0
         count_for_recall = 0
-        for r in references:
+        for r in _refs:
             _r = self.tokenize(r, True)
             r_ngrams = self.count_ngrams(_r, n)
             matches += self.count_overlap(summary_ngrams, r_ngrams)
             count_for_recall += self.len_ngram(_r, n)
-        count_for_prec = len(references) * self.len_ngram(_summary, n)
+        count_for_prec = len(_refs) * self.len_ngram(_summary, n)
         f1 = self._calc_f1(matches, count_for_recall, count_for_prec, alpha)
         return f1
 
@@ -142,11 +149,12 @@ class RougeCalculator():
         matches = 0
         count_for_recall = 0
         _summary = self.tokenize(summary)
-        for r in references:
+        _refs = [references] if isinstance(references, str) else references
+        for r in _refs:
             _r = self.tokenize(r, True)
             matches += self.lcs(_r, _summary)
             count_for_recall += len(_r)
-        count_for_prec = len(references) * len(_summary)
+        count_for_prec = len(_refs) * len(_summary)
         f1 = self._calc_f1(matches, count_for_recall, count_for_prec, alpha)
         return f1
 
@@ -160,10 +168,11 @@ class RougeCalculator():
         matches = 0
         count_for_recall = 0
         s_bes = self.count_be(summary, compare_type)
-        for r in references:
+        _refs = [references] if isinstance(references, str) else references
+        for r in _refs:
             r_bes = self.count_be(r, compare_type, True)
             matches += self.count_overlap(s_bes, r_bes)
             count_for_recall += sum(r_bes.values())
-        count_for_prec = len(references) * sum(s_bes.values())
+        count_for_prec = len(_refs) * sum(s_bes.values())
         f1 = self._calc_f1(matches, count_for_recall, count_for_prec, alpha)
         return f1
