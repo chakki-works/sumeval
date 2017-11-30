@@ -1,11 +1,18 @@
-# sumeval
+<p align="center">
+  <img src="https://github.com/chakki-works/sumeval/raw/master/doc/top.png" width="300px">
 
-![top.png](./doc/top.png)
+  <h4 align="center">
+    Well tested & Multi-language<br/>
+    evaluation framework for Text Summarization.
+  </h4>
+</p>
 
-**Well tested & Multi-language evaluation framework for text summarization.**
+* Well tested
+  * The scores are tested compare with [original Perl script (ROUGE-1.5.5.pl)](https://github.com/summanlp/evaluation).
+* Multi-language
+  * Not only English, Japanese are also supported. The other language is extensible [easily](https://github.com/chakki-works/sumeval#welcome-contribution-tada).
 
-The implementation is pure Python, and its 
-scores are tested compare with [original Perl script (ROUGE-1.5.5.pl)](https://github.com/summanlp/evaluation).
+Of course, implementation is Pure Python!
 
 
 ```
