@@ -92,9 +92,9 @@ def sentence_to_generator(summary, references):
     yield summary, references
 
 
-def entory_point():
+def entry_point():
     plac.call(main)
 
 
 if __name__ == "__main__":
-    entory_point()
+    entry_point()

@@ -21,7 +21,7 @@ def get_lang_data():
 
 setup(
     name="sumeval",
-    version="0.1.2",
+    version="0.1.3",
     description="Well tested evaluation framework for Text summarization",
     url="https://github.com/chakki-works/sumeval",
     author="icoxfog417",
@@ -38,7 +38,7 @@ setup(
         "sumeval.metrics.lang": get_lang_data()
     },
     entry_points={
-        "console_scripts": ["sumeval=sumeval.cli:entory_point"],
+        "console_scripts": ["sumeval=sumeval.cli.sum_eval:entry_point"],
     },
     install_requires=requires,
     classifiers=[
