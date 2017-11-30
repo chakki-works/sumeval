@@ -14,6 +14,7 @@
 
 Of course, implementation is Pure Python!
 
+## How to use
 
 ```
 from sumeval.metrics.rouge import RougeCalculator
@@ -44,6 +45,44 @@ rouge_be = rouge.rouge_be(
 print("ROUGE-1: {}, ROUGE-2: {}, ROUGE-L: {}, ROUGE-BE: {}".format(
     rouge_1, rouge_2, rouge_l, rouge_be
 ).replace(", ", "\n"))
+```
+
+### From the command line
+
+```
+sumeval r-nlb "I'm living New York its my home town so awesome" "My home town is awesome"
+```
+
+output.
+
+```
+{
+  "options": {
+    "stopwords": true,
+    "stemming": false,
+    "word_limit": -1,
+    "length_limit": -1,
+    "alpha": 0.5,
+    "input-summary": "I'm living New York its my home town so awesome",
+    "input-references": [
+      "My home town is awesome"
+    ]
+  },
+  "averages": {
+    "ROUGE-1": 0.7499999999999999,
+    "ROUGE-2": 0.6666666666666666,
+    "ROUGE-L": 0.7499999999999999,
+    "ROUGE-BE": 0
+  },
+  "scores": [
+    {
+      "ROUGE-1": 0.7499999999999999,
+      "ROUGE-2": 0.6666666666666666,
+      "ROUGE-L": 0.7499999999999999,
+      "ROUGE-BE": 0
+    }
+  ]
+}
 ```
 
 ## Install
