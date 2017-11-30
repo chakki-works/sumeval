@@ -4,14 +4,15 @@ from sumeval.metrics.lang import get_lang
 
 class RougeCalculator():
 
-    def __init__(self, tokenizer=None, stopwords=True, stemming=False,
-                 word_limit=-1, length_limit=-1, lang="en"):
-        self.tokenizer = tokenizer
+    def __init__(self,
+                 stopwords=True, stemming=False,
+                 word_limit=-1, length_limit=-1, lang="en", tokenizer=None):
         self.stemming = stemming
         self.stopwords = stopwords
         self.word_limit = word_limit
         self.length_limit = length_limit
         self.lang = get_lang(lang)
+        self.tokenizer = tokenizer
 
     def tokenize(self, text_or_words, is_reference=False):
         """

@@ -1,9 +1,12 @@
 # sumeval
 
-Well tested evaluation framework for text summarization.
+![top.png](./doc/top.png)
+
+**Well tested & Multi-language evaluation framework for text summarization.**
 
 The implementation is pure Python, and its 
 scores are tested compare with [original Perl script (ROUGE-1.5.5.pl)](https://github.com/summanlp/evaluation).
+
 
 ```
 from sumeval.metrics.rouge import RougeCalculator
@@ -54,8 +57,10 @@ pip install sumeval
 
 * [pythonrouge](https://github.com/tagucci/pythonrouge)
   * It calls original perl script
+  * `pip install git+https://github.com/tagucci/pythonrouge.git`
 * [rougescore](https://github.com/bdusell/rougescore)
   * It's simple python implementation for rouge score
+  * `pip install git+git://github.com/bdusell/rougescore.git`
 
 ## Welcome Contribution :tada:
 

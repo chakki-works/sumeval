@@ -2,7 +2,7 @@ import os
 from setuptools import setup
 
 
-requires = []
+requires = ["plac>=0.9.6"]
 
 
 def get_lang_data():
@@ -35,6 +35,9 @@ setup(
     ],
     package_data={
         "sumeval.metrics.lang": get_lang_data()
+    },
+    entry_points={
+        "console_scripts": ["sumeval=sumeval.cli:entory_point"],
     },
     install_requires=requires,
     classifiers=[
