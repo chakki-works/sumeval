@@ -85,6 +85,8 @@ output.
 }
 ```
 
+Undoubtedly you can use file input. Please see more detail by `sumeval -h`.
+
 ## Install
 
 ```
