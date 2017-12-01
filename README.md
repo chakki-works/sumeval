@@ -8,7 +8,8 @@
 </p>
 
 * Well tested
-  * The scores are tested compare with [original Perl script (ROUGE-1.5.5.pl)](https://github.com/summanlp/evaluation).
+  * The ROUGE-X scores are tested compare with [original Perl script (ROUGE-1.5.5.pl)](https://github.com/summanlp/evaluation).
+  * The BLEU score is calculated by [SacréBLEU](https://github.com/awslabs/sockeye/tree/master/contrib/sacrebleu), that produces the same values as official script (`mteval-v13a.pl`) used by WMT.
 * Multi-language
   * Not only English, Japanese are also supported. The other language is extensible [easily](https://github.com/chakki-works/sumeval#welcome-contribution-tada).
 
@@ -16,7 +17,7 @@ Of course, implementation is Pure Python!
 
 ## How to use
 
-```
+```py
 from sumeval.metrics.rouge import RougeCalculator
 
 
@@ -45,6 +46,18 @@ rouge_be = rouge.rouge_be(
 print("ROUGE-1: {}, ROUGE-2: {}, ROUGE-L: {}, ROUGE-BE: {}".format(
     rouge_1, rouge_2, rouge_l, rouge_be
 ).replace(", ", "\n"))
+```
+
+```py
+from sumeval.metrics.bleu import BLEUCalculator
+
+
+bleu = BLEUCalculator()
+score = bleu.bleu("I am waiting on the beach",
+                  "He is walking on the beach")
+
+bleu_ja = BLEUCalculator(lang="ja")
+score_ja = bleu.bleu("私はビーチで待ってる", "彼がベンチで待ってる")
 ```
 
 ### From the command line
@@ -95,6 +108,7 @@ pip install sumeval
 
 ## Dependencies
 
+* BLEU is depends on [SacréBLEU](https://github.com/awslabs/sockeye/tree/master/contrib/sacrebleu)
 * To calculate `ROUGE-BE`, [`spaCy`](https://github.com/explosion/spaCy) is required.
 * To use lang `ja`, [`janome`](https://github.com/mocobeta/janome) or [`MeCab`](https://github.com/taku910/mecab) is required.
   * Especially to get score of `ROUGE-BE`, [`CaboCha`](https://github.com/taku910/cabocha) is needed additionally.

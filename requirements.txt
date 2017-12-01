@@ -1,1 +1,2 @@
 plac>=0.9.6
+sacrebleu>=1.1.7

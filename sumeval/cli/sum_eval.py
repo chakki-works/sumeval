@@ -3,6 +3,7 @@ import plac
 from itertools import groupby
 from statistics import mean
 from sumeval.metrics.rouge import RougeCalculator
+from sumeval.metrics.bleu import BLEUCalculator
 
 
 def main(
@@ -16,29 +17,36 @@ def main(
     language: ("word limit count", "option", "la") = "en",
     *params):
 
-    score_type, score_kinds = score_desc.lower().split("-")
+    if "-" in score_desc:
+        score_type, score_kinds = score_desc.lower().split("-")
+    else:
+        score_type = score_desc.lower()
+        score_kinds = ""
+
     if len(params) < 2:
         print("You have to specify at least one summary and reference.")
         return
 
     summary = params[0]
     references = params[1:]
+    if isinstance(references, tuple):
+        references = list(references)
     stopwords = not include_stopwords
 
+    generator = None
+    if use_file:
+        generator = file_generator(summary, references)
+    else:
+        generator = sentence_to_generator(summary, references)
+
     scores = []
+    keys = []
     if score_type == "r":
         scorer = RougeCalculator(
             stopwords=stopwords, stemming=stemming,
             word_limit=word_limit, length_limit=length_limit,
             lang=language)
 
-        generator = None
-        if use_file:
-            generator = file_generator(summary, references)
-        else:
-            generator = sentence_to_generator(summary, references)
-
-        keys = []
         for s, rs in generator:
             score = {}
             for k in score_kinds:
@@ -49,6 +57,16 @@ def main(
                     score["ROUGE-L"] = scorer.rouge_l(s, rs, alpha)
                 elif k == "b":
                     score["ROUGE-BE"] = scorer.rouge_be(s, rs, "HMR", alpha)
+            if len(keys) == 0:
+                keys = list(score.keys())
+            scores.append(score)
+
+    elif score_type == "b":
+        scorer = BLEUCalculator(lang=language)
+        for s, rs in generator:
+            score = {}
+            print(s, rs)
+            score["BLEU"] = scorer.bleu(s, rs)
             if len(keys) == 0:
                 keys = list(score.keys())
             scores.append(score)

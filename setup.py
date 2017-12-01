@@ -2,7 +2,7 @@ import os
 from setuptools import setup
 
 
-requires = ["plac>=0.9.6"]
+requires = ["plac>=0.9.6", "sacrebleu>=1.1.7"]
 
 
 def get_lang_data():
@@ -21,7 +21,7 @@ def get_lang_data():
 
 setup(
     name="sumeval",
-    version="0.1.3",
+    version="0.1.4",
     description="Well tested evaluation framework for Text summarization",
     url="https://github.com/chakki-works/sumeval",
     author="icoxfog417",
