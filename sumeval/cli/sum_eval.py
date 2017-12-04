@@ -7,7 +7,7 @@ from sumeval.metrics.bleu import BLEUCalculator
 
 
 def main(
-    score_desc: "ex: To calculate ROUGE-N, L, BE => 'r-nlb'",
+    score_desc: ("ex: To calculate ROUGE-N, L, BE => 'r-nlb'"),
     use_file: ("read data from file", "flag", "f"),
     include_stopwords: ("don't ignore stop words", "flag", "in"),
     stemming: ("use stemming", "flag", "st"),
