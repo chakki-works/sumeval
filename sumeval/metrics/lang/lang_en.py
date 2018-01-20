@@ -5,7 +5,7 @@ from sumeval.metrics.lang.base_lang import BaseLang
 class LangEN(BaseLang):
 
     def __init__(self):
-        super().__init__("en")
+        super(LangEN, self).__init__("en")
         self._symbol_replace = re.compile(r"[^A-Za-z0-9-]")
         self._valid_word = re.compile(r"^[A-Za-z0-9$]")
 

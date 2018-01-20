@@ -5,7 +5,7 @@ from sumeval.metrics.lang.base_lang import BaseLang, BasicElement
 class LangJA(BaseLang):
 
     def __init__(self):
-        super().__init__("ja")
+        super(LangJA, self).__init__("ja")
         self._set_tokenizer()
         self._symbol_replace = re.compile(r"[^ぁ-んァ-ン一-龥ーa-zA-Zａ-ｚＡ-Ｚ0-9０-９]")
 
