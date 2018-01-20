@@ -76,8 +76,8 @@ class BaseLang():
             with p.open(encoding="utf-8") as f:
                 lines = f.readlines()
                 lines = [ln.strip() for ln in lines]
-                lines = [ln for ln in lines if ln]
-            self._stemming = dict(lines)
+                pairs = [ln.split(" ", 1) for ln in lines if ln]
+            self._stemming = dict(pairs)
 
 
 class BasicElement():
