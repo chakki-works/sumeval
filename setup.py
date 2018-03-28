@@ -21,7 +21,7 @@ def get_lang_data():
 
 setup(
     name="sumeval",
-    version="0.1.5",
+    version="0.1.6",
     description="Well tested evaluation framework for Text summarization",
     url="https://github.com/chakki-works/sumeval",
     author="icoxfog417",
