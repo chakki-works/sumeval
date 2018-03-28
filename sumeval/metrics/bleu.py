@@ -19,6 +19,22 @@ class BLEUCalculator():
             self.tokenizer = "ja"
 
     def bleu(self, summary, references, score_only=True):
+        """
+        Calculate BLEU score by sacrebleu.
+
+        Parameters
+        ----------
+        summary: str
+            summary text
+        references: str or str[]
+            reference or references to evaluate summary
+        score_only: bool
+            when True, return only score
+
+        See Also
+        --------
+        https://github.com/mjpost/sacreBLEU
+        """
         if isinstance(summary, str):
             _s = summary
             _refs = references

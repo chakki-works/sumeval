@@ -16,7 +16,17 @@ class RougeCalculator():
 
     def tokenize(self, text_or_words, is_reference=False):
         """
-        reference:
+        Tokenize a text under original Perl script manner.
+
+        Parameters
+        ----------
+        text_or_words: str or str[]
+            target text or tokenized words
+        is_reference: bool
+            for reference process or not
+        
+        See Also
+        --------
         https://github.com/andersjo/pyrouge/blob/master/tools/ROUGE-1.5.5/ROUGE-1.5.5.pl#L1820
         """
         words = text_or_words
@@ -49,7 +59,8 @@ class RougeCalculator():
             # stemming is only adopted to reference
             # https://github.com/andersjo/pyrouge/blob/master/tools/ROUGE-1.5.5/ROUGE-1.5.5.pl#L1416
 
-            # min_length ref: https://github.com/andersjo/pyrouge/blob/master/tools/ROUGE-1.5.5/ROUGE-1.5.5.pl#L2629
+            # min_length ref
+            # https://github.com/andersjo/pyrouge/blob/master/tools/ROUGE-1.5.5/ROUGE-1.5.5.pl#L2629
             words = [self.lang.stemming(w, min_length=3) for w in words]
 
         return words
@@ -95,9 +106,25 @@ class RougeCalculator():
 
     def rouge_n(self, summary, references, n, alpha=0.5):
         """
-        alpha: alpha -> 0: recall is more important
+        Calculate ROUGE-N score.
+
+        Parameters
+        ----------
+        summary: str
+            summary text
+        references: str or str[]
+            reference or references to evaluate summary
+        n: int
+            ROUGE kind. n=1, calculate when ROUGE-1
+        alpha: float (0~1)
+            alpha -> 0: recall is more important
             alpha -> 1: precision is more important
             F = 1/(alpha * (1/P) + (1 - alpha) * (1/R))
+        
+        Returns
+        -------
+        f1: float
+            f1 score
         """
         _summary = self.tokenize(summary)
         summary_ngrams = self.count_ngrams(_summary, n)
@@ -147,6 +174,25 @@ class RougeCalculator():
         return left
 
     def rouge_l(self, summary, references, alpha=0.5):
+        """
+        Calculate ROUGE-L score.
+
+        Parameters
+        ----------
+        summary: str
+            summary text
+        references: str or str[]
+            reference or references to evaluate summary
+        alpha: float (0~1)
+            alpha -> 0: recall is more important
+            alpha -> 1: precision is more important
+            F = 1/(alpha * (1/P) + (1 - alpha) * (1/R))
+        
+        Returns
+        -------
+        f1: float
+            f1 score
+        """
         matches = 0
         count_for_recall = 0
         _summary = self.tokenize(summary)
@@ -166,6 +212,32 @@ class RougeCalculator():
         return c
 
     def rouge_be(self, summary, references, compare_type="HMR", alpha=0.5):
+        """
+        Calculate ROUGE-BE score.
+
+        Parameters
+        ----------
+        summary: str
+            summary text
+        references: str or str[]
+            reference or references to evaluate summary
+        compare_type: str
+            "H", "M", "R" or these combination.
+            Each character means basic element component.
+            H: head, M: modifier, R: relation.
+            The image of these relation is following.
+            {head word}-{relation}->{modifier word}
+            When "HMR", use head-relation-modifier triple as basic element.
+        alpha: float (0~1)
+            alpha -> 0: recall is more important
+            alpha -> 1: precision is more important
+            F = 1/(alpha * (1/P) + (1 - alpha) * (1/R))
+        
+        Returns
+        -------
+        f1: float
+            f1 score
+        """
         matches = 0
         count_for_recall = 0
         s_bes = self.count_be(summary, compare_type)

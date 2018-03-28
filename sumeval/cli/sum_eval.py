@@ -7,7 +7,7 @@ from sumeval.metrics.bleu import BLEUCalculator
 
 
 def main(
-    score_desc: ("ex: To calculate ROUGE-N, L, BE => 'r-nlb'"),
+    score_desc: ("score kind. ROUGE: r (-nlb means ROUGE-N, L, BE), BLEU: b."),
     use_file: ("read data from file", "flag", "f"),
     include_stopwords: ("don't ignore stop words", "flag", "in"),
     stemming: ("use stemming", "flag", "st"),
@@ -16,6 +16,18 @@ def main(
     alpha: ("alpha for f1-score", "option") = 0.5,
     language: ("word limit count", "option", "la") = "en",
     *params):
+    """
+    Calculate ROUGE/BLEU score.
+    summary: Your generated summary.
+    references: A Reference or references to evaluate.
+
+    Ex: summary: "my summary is awesome"
+        reference: "summaries are awesome"
+        score kind: ROUGE-N
+
+    Then:
+        sumeval r-n "my summary is awesome" "summaries are awesome"
+    """
 
     if "-" in score_desc:
         score_type, score_kinds = score_desc.lower().split("-")
