@@ -30,27 +30,29 @@ class RougeCalculator():
         https://github.com/andersjo/pyrouge/blob/master/tools/ROUGE-1.5.5/ROUGE-1.5.5.pl#L1820
         """
         words = text_or_words
-        # tokenization
-        if isinstance(words, str):
-            if self.tokenizer:
-                words = self.tokenizer.tokenize(text_or_words)
-            else:
-                words = self.lang.tokenize(text_or_words)
-
-        words = [w.strip().lower() for w in words if w.strip()]
 
         # limit length
         if self.word_limit > 0:
-            words = words[:self.word_limit]
-        elif self.length_limit > 0:
-            _words = []
-            length = 0
-            for w in words:
-                if length + len(w) < self.length_limit:
-                    _words.append(w)
+            if isinstance(words, str):
+                if self.tokenizer:
+                    words = self.tokenizer.split(text_or_words)
                 else:
-                    break
-            words = _words
+                    words = self.lang.split(text_or_words)
+            if self.word_limit < len(words):
+                words = words[:self.word_limit]
+            text = '{}'.format(' ' * self.lang.space_length).join(words)
+        else:
+            if not isinstance(words, str):
+                text = '{}'.join(' ' * self.lang.space_length).join(words)
+            else:
+                text = words
+
+            if self.length_limit > 0:
+                if self.length_limit < len(text):
+                    text = text[:self.length_limit]
+
+        text = text.lower()
+        words = self.lang.tokenize(text)
 
         if self.stopwords:
             words = [w for w in words if not self.lang.is_stop_word(w)]
@@ -62,7 +64,6 @@ class RougeCalculator():
             # min_length ref
             # https://github.com/andersjo/pyrouge/blob/master/tools/ROUGE-1.5.5/ROUGE-1.5.5.pl#L2629
             words = [self.lang.stemming(w, min_length=3) for w in words]
-
         return words
 
     def parse_to_be(self, text, is_reference=False):

@@ -8,6 +8,7 @@ class LangJA(BaseLang):
         super(LangJA, self).__init__("ja")
         self._set_tokenizer()
         self._symbol_replace = re.compile(r"[^ぁ-んァ-ン一-龥ーa-zA-Zａ-ｚＡ-Ｚ0-9０-９]")
+        self.space_length = 0
 
     def load_parser(self):
         if self._PARSER is None:
@@ -45,6 +46,9 @@ class LangJA(BaseLang):
         words = [t.surface for t in self.tokenizer.tokenize(_txt)]
         words = [w.strip() for w in words if w.strip()]
         return words
+
+    def split(self, text):
+        return self.tokenize(text)
 
     def parse_dependency_tree(self, text):
         _txt = self._symbol_replace.sub(" ", text)

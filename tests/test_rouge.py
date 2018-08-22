@@ -77,6 +77,31 @@ class TestRouge(unittest.TestCase):
                                 reference=[[[r] for r in references]],
                                 n_gram=n, recall_only=False,
                                 length_limit=True, length=50,
+                                word_level=False,
+                                stemming=False, stopwords=True)
+                    b1_v = baseline.calc_score()
+                    b2_v = rouge_n(rouge.tokenize(s),
+                                   [rouge.tokenize(r) for r in references],
+                                   n, 0.5)
+                    v = rouge.rouge_n(s, references, n)
+                    self.assertLess(abs(b2_v - v), 1e-5)
+                    self.assertLess(abs(b1_v["ROUGE-{}-F".format(n)] - v), 1e-5) # noqa
+
+    def test_rouge_with_word_limit(self):
+        data = self.load_test_data()
+        rouge = RougeCalculator(stopwords=True, word_limit=5)
+        for eval_id in data:
+            summaries = data[eval_id]["summaries"]
+            references = data[eval_id]["references"]
+            for n in [1, 2]:
+                for s in summaries:
+                    baseline = Pythonrouge(
+                                summary_file_exist=False,
+                                summary=[[s]],
+                                reference=[[[r] for r in references]],
+                                n_gram=n, recall_only=False,
+                                length_limit=True, length=5,
+                                word_level=True,
                                 stemming=False, stopwords=True)
                     b1_v = baseline.calc_score()
                     b2_v = rouge_n(rouge.tokenize(s),
