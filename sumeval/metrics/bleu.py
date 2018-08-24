@@ -15,7 +15,11 @@ class BLEUCalculator():
         self.lang = get_lang(lang)
         self.tokenizer = tokenizer
         if lang == "ja":
-            TOKENIZERS["ja"] = self.lang.tokenized_str
+            def tokenizer_ja(text):
+                words = self.lang.tokenize_with_preprocess(text)
+                return " ".join(words)
+
+            TOKENIZERS["ja"] = tokenizer_ja
             self.tokenizer = "ja"
 
     def bleu(self, summary, references, score_only=True):

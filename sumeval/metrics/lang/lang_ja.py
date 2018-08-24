@@ -42,17 +42,21 @@ class LangJA(BaseLang):
             self.tokenizer = Tokenizer()
 
     def tokenize(self, text):
-        _txt = self._symbol_replace.sub(" ", text)
-        words = [t.surface for t in self.tokenizer.tokenize(_txt)]
+        words = [t.surface for t in self.tokenizer.tokenize(text)]
+        return words
+
+    def tokenize_with_preprocess(self, text):
+        _text = self._symbol_replace.sub(" ", text)
+        words = self.tokenize(_text)
         words = [w.strip() for w in words if w.strip()]
         return words
 
-    def split(self, text):
-        return self.tokenize(text)
+    def join(self, words):
+        return "".join(words)
 
     def parse_dependency_tree(self, text):
-        _txt = self._symbol_replace.sub(" ", text)
-        tree = self.load_parser().parse(_txt)
+        _text = self._symbol_replace.sub(" ", text)
+        tree = self.load_parser().parse(_text)
 
         # get chunks
         chunks = []

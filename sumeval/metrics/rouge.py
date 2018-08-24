@@ -21,38 +21,44 @@ class RougeCalculator():
         Parameters
         ----------
         text_or_words: str or str[]
-            target text or tokenized words
+            target text or tokenized words.
+            If you use tokenized words, preprocessing is not applied.
+            It allows you to calculate ROUGE under your customized tokens,
+            but you have to pay attention to preprocessing.
         is_reference: bool
             for reference process or not
-        
+
         See Also
         --------
         https://github.com/andersjo/pyrouge/blob/master/tools/ROUGE-1.5.5/ROUGE-1.5.5.pl#L1820
         """
         words = text_or_words
 
-        # limit length
+        def split(text):
+            if self.tokenizer:
+                _words = self.tokenizer.tokenize(text)
+            else:
+                _words = self.lang.tokenize(text)
+            return _words
+
         if self.word_limit > 0:
             if isinstance(words, str):
-                if self.tokenizer:
-                    words = self.tokenizer.split(text_or_words)
-                else:
-                    words = self.lang.split(text_or_words)
-            if self.word_limit < len(words):
-                words = words[:self.word_limit]
-            text = '{}'.format(' ' * self.lang.space_length).join(words)
-        else:
-            if not isinstance(words, str):
-                text = '{}'.join(' ' * self.lang.space_length).join(words)
+                words = split(words)
+            words = words[:self.word_limit]
+            words = self.lang.join(words)
+        elif self.length_limit > 0:
+            text = words
+            if isinstance(text, (list, tuple)):
+                text = self.lang.join(words)
+            words = text[:self.length_limit]
+
+        if isinstance(words, str):
+            if self.tokenizer:
+                words = self.tokenizer.tokenize(words)
             else:
-                text = words
+                words = self.lang.tokenize_with_preprocess(words)
 
-            if self.length_limit > 0:
-                if self.length_limit < len(text):
-                    text = text[:self.length_limit]
-
-        text = text.lower()
-        words = self.lang.tokenize(text)
+        words = [w.lower().strip() for w in words if w.strip()]
 
         if self.stopwords:
             words = [w for w in words if not self.lang.is_stop_word(w)]
@@ -121,7 +127,7 @@ class RougeCalculator():
             alpha -> 0: recall is more important
             alpha -> 1: precision is more important
             F = 1/(alpha * (1/P) + (1 - alpha) * (1/R))
-        
+
         Returns
         -------
         f1: float

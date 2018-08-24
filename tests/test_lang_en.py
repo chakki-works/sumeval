@@ -24,7 +24,7 @@ class TestLangEN(unittest.TestCase):
     def test_stemming(self):
         lang = LangEN()
         text = "dippier dippy"
-        counts = Counter([lang.stemming(w) for w in lang.tokenize(text)])
+        counts = Counter([lang.stemming(w) for w in lang.tokenize_with_preprocess(text)])
         self.assertEqual(("dippy", 2), counts.most_common()[0])
 
 

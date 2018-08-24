@@ -19,8 +19,11 @@ class BaseLang():
     def tokenize(self, text):
         raise Exception("Have to implement tokenize in subclass")
 
-    def tokenized_str(self, text):
-        return " ".join(self.tokenize(text))
+    def tokenize_with_preprocess(self, text):
+        return self.tokenize(text)
+
+    def join(self, words):
+        return " ".join(words)
 
     def parse_to_be(self, text):
         from spacy.symbols import VERB, ADJ

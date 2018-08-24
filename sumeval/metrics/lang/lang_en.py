@@ -11,24 +11,24 @@ class LangEN(BaseLang):
         self.space_length = 1
 
     def tokenize(self, text):
-        _txt = self._format_text(text)
-        words = _txt.split(" ")
+        return text.split(" ")
+
+    def tokenize_with_preprocess(self, text):
+        _text = self._preprocess(text)
+        words = self.tokenize(_text)
         words = [w.strip() for w in words if w.strip()]
         words = [w for w in words if self._valid_word.match(w)]
         return words
 
-    def split(self, text):
-        return text.split()
-
-    def _format_text(self, text):
-        _txt = text.replace("-", " - ")
-        _txt = self._symbol_replace.sub(" ", _txt)
-        _txt = _txt.strip()
-        return _txt
+    def _preprocess(self, text):
+        _text = text.replace("-", " - ")
+        _text = self._symbol_replace.sub(" ", _text)
+        _text = _text.strip()
+        return _text
 
     def parse_to_be(self, text):
-        _txt = self._format_text(text)
-        bes = super().parse_to_be(_txt)
+        _text = self._preprocess(text)
+        bes = super().parse_to_be(_text)
 
         def is_valid(be):
             if self._valid_word.match(be.head) and\
