@@ -57,7 +57,7 @@ score = bleu.bleu("I am waiting on the beach",
                   "He is walking on the beach")
 
 bleu_ja = BLEUCalculator(lang="ja")
-score_ja = bleu.bleu("私はビーチで待ってる", "彼がベンチで待ってる")
+score_ja = bleu_ja.bleu("私はビーチで待ってる", "彼がベンチで待ってる")
 ```
 
 ### From the command line
