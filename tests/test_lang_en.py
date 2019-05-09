@@ -2,7 +2,6 @@ import os
 import sys
 import unittest
 from collections import Counter
-sys.path.append(os.path.join(os.path.dirname(__file__), "../"))
 from sumeval.metrics.lang.lang_en import LangEN
 
 

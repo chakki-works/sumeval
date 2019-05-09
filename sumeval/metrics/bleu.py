@@ -5,11 +5,11 @@ from sumeval.metrics.lang import get_lang
 class BLEUCalculator():
 
     def __init__(self,
-                 smooth="floor", smooth_floor=0.01,
+                 smooth_method="floor", smooth_value=0.01,
                  lowercase=False, use_effective_order=True,
                  lang="en", tokenizer=DEFAULT_TOKENIZER):
-        self.smooth = smooth
-        self.smooth_floor = smooth_floor
+        self.smooth_method = smooth_method
+        self.smooth_value = smooth_value
         self.lowercase = lowercase
         self.use_effective_order = use_effective_order
         self.lang = get_lang(lang)
@@ -47,7 +47,8 @@ class BLEUCalculator():
                 _refs = [references]
             bleu = corpus_bleu(
                     _s, _refs,
-                    smooth=self.smooth, smooth_floor=self.smooth_floor,
+                    smooth_method=self.smooth_method,
+                    smooth_value=self.smooth_value,
                     force=False, lowercase=self.lowercase,
                     tokenize=self.tokenizer,
                     use_effective_order=self.use_effective_order)
@@ -57,7 +58,8 @@ class BLEUCalculator():
             # already tokenized summary and references
             bleu = corpus_bleu(
                     _s, _refs,
-                    smooth=self.smooth, smooth_floor=self.smooth_floor,
+                    smooth_method=self.smooth_method,
+                    smooth_value=self.smooth_value,
                     force=True, lowercase=self.lowercase,
                     tokenize="none",
                     use_effective_order=self.use_effective_order)

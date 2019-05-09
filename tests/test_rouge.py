@@ -4,7 +4,6 @@ import sys
 import unittest
 from rougescore import rouge_n, rouge_l
 from pythonrouge.pythonrouge import Pythonrouge
-sys.path.append(os.path.join(os.path.dirname(__file__), "../"))
 from sumeval.metrics.rouge import RougeCalculator
 
 

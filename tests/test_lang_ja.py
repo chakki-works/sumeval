@@ -1,7 +1,6 @@
 import os
 import sys
 import unittest
-sys.path.append(os.path.join(os.path.dirname(__file__), "../"))
 from sumeval.metrics.lang.lang_ja import LangJA
 import CaboCha
 
