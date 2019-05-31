@@ -8,7 +8,6 @@ class LangEN(BaseLang):
         super(LangEN, self).__init__("en")
         self._symbol_replace = re.compile(r"[^A-Za-z0-9-]")
         self._valid_word = re.compile(r"^[A-Za-z0-9$]")
-        self.space_length = 1
 
     def tokenize(self, text):
         return text.split(" ")

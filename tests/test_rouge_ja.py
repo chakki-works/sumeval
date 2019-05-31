@@ -1,8 +1,7 @@
 import os
 import json
-import sys
 import unittest
-from rougescore import rouge_n, rouge_l
+from rougescore import rouge_n
 from sumeval.metrics.rouge import RougeCalculator
 
 

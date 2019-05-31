@@ -1,5 +1,3 @@
-import os
-import sys
 import unittest
 from collections import Counter
 from sumeval.metrics.lang.lang_en import LangEN
@@ -25,7 +23,3 @@ class TestLangEN(unittest.TestCase):
         text = "dippier dippy"
         counts = Counter([lang.stemming(w) for w in lang.tokenize_with_preprocess(text)])
         self.assertEqual(("dippy", 2), counts.most_common()[0])
-
-
-if __name__ == "__main__":
-    unittest.main(warnings="ignore")

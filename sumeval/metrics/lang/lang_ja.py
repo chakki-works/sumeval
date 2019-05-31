@@ -8,7 +8,6 @@ class LangJA(BaseLang):
         super(LangJA, self).__init__("ja")
         self._set_tokenizer()
         self._symbol_replace = re.compile(r"[^ぁ-んァ-ン一-龥ーa-zA-Zａ-ｚＡ-Ｚ0-9０-９]")
-        self.space_length = 0
 
     def load_parser(self):
         if self._PARSER is None:

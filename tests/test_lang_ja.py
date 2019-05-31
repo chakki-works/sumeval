@@ -1,5 +1,3 @@
-import os
-import sys
 import unittest
 from sumeval.metrics.lang.lang_ja import LangJA
 import CaboCha
