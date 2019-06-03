@@ -1,6 +1,5 @@
 import unittest
 from sumeval.metrics.lang.lang_ja import LangJA
-import CaboCha
 
 
 class TestLangJA(unittest.TestCase):
@@ -17,9 +16,6 @@ class TestLangJA(unittest.TestCase):
             else:
                 self.assertEqual(be.head, "花")
                 self.assertEqual(be.modifier, "見付ける")
-
-        cabocha = CaboCha.Parser()
-        print(cabocha.parseToString(text))
 
 
 if __name__ == "__main__":
