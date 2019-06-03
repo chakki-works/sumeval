@@ -7,7 +7,7 @@ class LangZH(BaseLang):
 
     def __init__(self):
         super(LangZH, self).__init__("zh")
-        self._symbol_replace = re.compile(r"[\.\!/_,$%\^\*\(\)\+\“\’\—\!。：？、~@#￥&（）【】「」《》·]")
+        self._symbol_replace = re.compile(r"[\.\!/_,$%\^\*\(\)\+\“\’\—\!。：？、，：:~@#￥&（）【】「」《》·]")
         import jieba
         self.tokenizer = jieba
 
