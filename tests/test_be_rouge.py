@@ -1,6 +1,5 @@
 import os
 import json
-import sys
 import unittest
 from sumeval.metrics.rouge import RougeCalculator
 

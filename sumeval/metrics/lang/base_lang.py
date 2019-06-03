@@ -26,22 +26,24 @@ class BaseLang():
         return " ".join(words)
 
     def parse_to_be(self, text):
-        from spacy.symbols import VERB, ADJ
+        from spacy.symbols import VERB, ADJ, NOUN
         doc = self.load_parser()(text)
         bes = []
-        for chunk in doc.noun_chunks:
+
+        for token in doc:
             # chunk level dependencies
-            if chunk.root.head.pos in [VERB, ADJ]:
-                be = BasicElement(chunk.root.text, chunk.root.head.lemma_,
-                                  chunk.root.dep_,)
+            if token.pos == NOUN and token.head.pos in [VERB, ADJ]:
+                print("a.{}=({})=>{}".format(token, token.dep_, token.head))
+                be = BasicElement(token.text, token.head.lemma_,
+                                  token.dep_,)
+                bes.append(be)
+                print(be)
+            elif token.pos in [VERB, ADJ] and token.head.pos == NOUN:
+                print("b.{}=({})=>{}".format(token, token.dep_, token.head))
+                be = BasicElement(token.head.text, token.lemma_,
+                                  token.dep_,)
                 bes.append(be)
 
-                # in-chunk level dependencies
-                for c in chunk.root.children:
-                    if c.pos in [VERB, ADJ]:
-                        be = BasicElement(chunk.root.text, c.lemma_,
-                                          c.dep_)
-                        bes.append(be)
         return bes
 
     def is_stop_word(self, word):

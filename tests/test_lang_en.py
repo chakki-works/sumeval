@@ -13,10 +13,10 @@ class TestLangEN(unittest.TestCase):
             print(be)
             if i == 0:
                 self.assertEqual(be.head, "toy")
-                self.assertEqual(be.modifier, "buy")
+                self.assertEqual(be.modifier, "beautiful")
             else:
                 self.assertEqual(be.head, "toy")
-                self.assertEqual(be.modifier, "beautiful")
+                self.assertEqual(be.modifier, "buy")
 
     def test_stemming(self):
         lang = LangEN()

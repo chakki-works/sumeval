@@ -7,6 +7,11 @@
   </h4>
 </p>
 
+[![PyPI version](https://badge.fury.io/py/sumeval.svg)](https://badge.fury.io/py/sumeval)
+[![Build Status](https://travis-ci.org/chakki-works/sumeval.svg?branch=master)](https://travis-ci.org/chakki-works/sumeval)
+[![codecov](https://codecov.io/gh/chakki-works/sumeval/branch/master/graph/badge.svg)](https://codecov.io/gh/chakki-works/sumeval)
+
+
 * Well tested
   * The ROUGE-X scores are tested compare with [original Perl script (ROUGE-1.5.5.pl)](https://github.com/summanlp/evaluation).
   * The BLEU score is calculated by [SacréBLEU](https://github.com/awslabs/sockeye/tree/master/contrib/sacrebleu), that produces the same values as official script (`mteval-v13a.pl`) used by WMT.
@@ -111,7 +116,7 @@ pip install sumeval
 * BLEU is depends on [SacréBLEU](https://github.com/awslabs/sockeye/tree/master/contrib/sacrebleu)
 * To calculate `ROUGE-BE`, [`spaCy`](https://github.com/explosion/spaCy) is required.
 * To use lang `ja`, [`janome`](https://github.com/mocobeta/janome) or [`MeCab`](https://github.com/taku910/mecab) is required.
-  * Especially to get score of `ROUGE-BE`, [`CaboCha`](https://github.com/taku910/cabocha) is needed additionally.
+  * Especially to get score of `ROUGE-BE`, [`GiNZA`](https://github.com/megagonlabs/ginza) is needed additionally.
 * To use lang `zh`, [`jieba`](https://github.com/fxsjy/jieba) is required.
   * Especially to get score of `ROUGE-BE`, [`pyhanlp`](https://github.com/hankcs/pyhanlp) is needed additionally.
 
