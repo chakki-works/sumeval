@@ -112,6 +112,8 @@ pip install sumeval
 * To calculate `ROUGE-BE`, [`spaCy`](https://github.com/explosion/spaCy) is required.
 * To use lang `ja`, [`janome`](https://github.com/mocobeta/janome) or [`MeCab`](https://github.com/taku910/mecab) is required.
   * Especially to get score of `ROUGE-BE`, [`CaboCha`](https://github.com/taku910/cabocha) is needed additionally.
+* To use lang `zh`, [`jieba`](https://github.com/fxsjy/jieba) is required.
+  * Especially to get score of `ROUGE-BE`, [`pyhanlp`](https://github.com/hankcs/pyhanlp) is needed additionally.
 
 ## Test
 

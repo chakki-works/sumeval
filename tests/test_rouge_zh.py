@@ -10,7 +10,7 @@ class TestRougeJA(unittest.TestCase):
     DATA_DIR = os.path.join(os.path.dirname(__file__), "data/rouge")
 
     def load_test_data(self):
-        test_file = os.path.join(self.DATA_DIR, "ROUGE-test-ja.json")
+        test_file = os.path.join(self.DATA_DIR, "ROUGE-test-zh.json")
         with open(test_file, encoding="utf-8") as f:
             data = json.load(f)
         return data
@@ -29,7 +29,7 @@ class TestRougeJA(unittest.TestCase):
 
     def test_rouge(self):
         data = self.load_test_data()
-        rouge = RougeCalculator(stopwords=False, lang="ja")
+        rouge = RougeCalculator(stopwords=False, lang="zh")
         for eval_id in data:
             summaries = data[eval_id]["summaries"]
             references = data[eval_id]["references"]
@@ -44,7 +44,7 @@ class TestRougeJA(unittest.TestCase):
 
     def test_rouge_with_stop_words(self):
         data = self.load_test_data()
-        rouge = RougeCalculator(stopwords=True, lang="ja")
+        rouge = RougeCalculator(stopwords=True, lang="zh")
 
         def split(text):
             words = self._split(text)
