@@ -3,6 +3,7 @@ python:
   - "3.6"
 before_install:
   - python --version
+  - sudo apt-get install -y libxml-parser-perl
 install:
   - pip install -r requirements-test.txt
   - python -m spacy download en

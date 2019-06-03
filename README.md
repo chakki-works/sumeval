@@ -7,6 +7,11 @@
   </h4>
 </p>
 
+[![PyPI version](https://badge.fury.io/py/sumeval.svg)](https://badge.fury.io/py/sumeval)
+[![Build Status](https://travis-ci.org/chakki-works/sumeval.svg?branch=master)](https://travis-ci.org/chakki-works/sumeval)
+[![codecov](https://codecov.io/gh/chakki-works/sumeval/branch/master/graph/badge.svg)](https://codecov.io/gh/chakki-works/sumeval)
+
+
 * Well tested
   * The ROUGE-X scores are tested compare with [original Perl script (ROUGE-1.5.5.pl)](https://github.com/summanlp/evaluation).
   * The BLEU score is calculated by [SacréBLEU](https://github.com/awslabs/sockeye/tree/master/contrib/sacrebleu), that produces the same values as official script (`mteval-v13a.pl`) used by WMT.
