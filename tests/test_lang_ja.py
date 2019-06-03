@@ -13,10 +13,10 @@ class TestLangJA(unittest.TestCase):
             print(be)
             if i == 0:
                 self.assertEqual(be.head, "花")
-                self.assertEqual(be.modifier, "綺麗")
+                self.assertEqual(be.modifier, "奇麗")
             else:
                 self.assertEqual(be.head, "花")
-                self.assertEqual(be.modifier, "見つける")
+                self.assertEqual(be.modifier, "見付ける")
 
         cabocha = CaboCha.Parser()
         print(cabocha.parseToString(text))
