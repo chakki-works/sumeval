@@ -7,7 +7,7 @@ before_install:
 install:
   - pip install -r requirements-test.txt
   - python -m spacy download en
-  - pip install "https://github.com/megagonlabs/ginza/releases/download/v1.0.2/ja_ginza_nopn-1.0.2.tgz"
+  - pip install "https://github.com/megagonlabs/ginza/releases/download/latest/ginza-latest.tar.gz"
 # command to run tests
 script:
   - pytest --cov=sumeval tests/test_*
