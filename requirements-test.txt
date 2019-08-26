@@ -14,3 +14,4 @@ jieba>=0.39
 pyhanlp>=0.1.45
 # For Japanese
 janome>=0.3.9
+https://github.com/megagonlabs/ginza/releases/download/latest/ginza-latest.tar.gz
