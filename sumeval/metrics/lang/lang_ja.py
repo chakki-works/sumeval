@@ -12,7 +12,7 @@ class LangJA(BaseLang):
     def load_parser(self):
         if self._PARSER is None:
             import spacy
-            self._PARSER = spacy.load("ja_ginza_nopn")
+            self._PARSER = spacy.load("ja_ginza")
         return self._PARSER
 
     def _set_tokenizer(self):
