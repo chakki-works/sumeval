@@ -1,4 +1,5 @@
 from collections import Counter
+from sumeval.metrics.lang.base_lang import BaseLang
 from sumeval.metrics.lang import get_lang
 
 
@@ -6,13 +7,17 @@ class RougeCalculator():
 
     def __init__(self,
                  stopwords=True, stemming=False,
-                 word_limit=-1, length_limit=-1, lang="en", tokenizer=None):
+                 word_limit=-1, length_limit=-1, lang="en"):
         self.stemming = stemming
         self.stopwords = stopwords
         self.word_limit = word_limit
         self.length_limit = length_limit
-        self.lang = get_lang(lang)
-        self.tokenizer = tokenizer
+        if isinstance(lang, str):
+            self.lang = lang
+            self._lang = get_lang(lang)
+        elif isinstance(lang, BaseLang):
+            self.lang = lang.lang
+            self._lang = lang
 
     def tokenize(self, text_or_words, is_reference=False):
         """
@@ -35,33 +40,27 @@ class RougeCalculator():
         words = text_or_words
 
         def split(text):
-            if self.tokenizer:
-                _words = self.tokenizer.tokenize(text)
-            else:
-                _words = self.lang.tokenize(text)
+            _words = self._lang.tokenize(text)
             return _words
 
         if self.word_limit > 0:
             if isinstance(words, str):
                 words = split(words)
             words = words[:self.word_limit]
-            words = self.lang.join(words)
+            words = self._lang.join(words)
         elif self.length_limit > 0:
             text = words
             if isinstance(text, (list, tuple)):
-                text = self.lang.join(words)
+                text = self._lang.join(words)
             words = text[:self.length_limit]
 
         if isinstance(words, str):
-            if self.tokenizer:
-                words = self.tokenizer.tokenize(words)
-            else:
-                words = self.lang.tokenize_with_preprocess(words)
+            words = self._lang.tokenize_with_preprocess(words)
 
         words = [w.lower().strip() for w in words if w.strip()]
 
         if self.stopwords:
-            words = [w for w in words if not self.lang.is_stop_word(w)]
+            words = [w for w in words if not self._lang.is_stop_word(w)]
 
         if self.stemming and is_reference:
             # stemming is only adopted to reference
@@ -69,18 +68,18 @@ class RougeCalculator():
 
             # min_length ref
             # https://github.com/andersjo/pyrouge/blob/master/tools/ROUGE-1.5.5/ROUGE-1.5.5.pl#L2629
-            words = [self.lang.stemming(w, min_length=3) for w in words]
+            words = [self._lang.stemming(w, min_length=3) for w in words]
         return words
 
     def parse_to_be(self, text, is_reference=False):
-        bes = self.lang.parse_to_be(text)
+        bes = self._lang.parse_to_be(text)
 
         def preprocess(be):
             be.head = be.head.lower().strip()
             be.modifier = be.modifier.lower().strip()
             if self.stemming and is_reference:
-                be.head = self.lang.stemming(be.head, min_length=3)
-                be.modifier = self.lang.stemming(be.modifier, min_length=3)
+                be.head = self._lang.stemming(be.head, min_length=3)
+                be.modifier = self._lang.stemming(be.modifier, min_length=3)
 
             return be
 

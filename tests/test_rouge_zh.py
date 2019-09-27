@@ -48,7 +48,7 @@ class TestRougeJA(unittest.TestCase):
 
         def split(text):
             words = self._split(text)
-            words = [w for w in words if not rouge.lang.is_stop_word(w)]
+            words = [w for w in words if not rouge._lang.is_stop_word(w)]
             return words
 
         for eval_id in data:
