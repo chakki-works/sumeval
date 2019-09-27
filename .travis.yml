@@ -9,6 +9,7 @@ install:
   - pip install -r requirements-test.txt
   - python -m spacy download en
   - pip install "https://github.com/megagonlabs/ginza/releases/download/latest/ginza-latest.tar.gz"
+  - hanlp parse <<< '徐先生还具体帮助他确定了把画雄鹰、松鼠和麻雀作为主攻目标。'
 # command to run tests
 script:
   - pytest --cov=sumeval tests/test_*
