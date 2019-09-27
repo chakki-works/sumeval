@@ -1,4 +1,5 @@
 import unittest
+import pytest
 from sumeval.metrics.lang.lang_zh import LangZH
 
 
@@ -10,6 +11,7 @@ class TestLangZH(unittest.TestCase):
         tokens = lang.tokenize(text)
         self.assertEqual(len(tokens), 8)
 
+    @pytest.mark.skip(reason="Download the parse model is terrible slow.")
     def test_basic_element(self):
         lang = LangZH()
         text = "我发现了一朵非常漂亮的花"
