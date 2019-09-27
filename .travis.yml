@@ -1,6 +1,7 @@
 language: python
 python:
   - "3.6"
+  - "3.7"
 before_install:
   - python --version
   - sudo apt-get install -y libxml-parser-perl
@@ -13,3 +14,10 @@ script:
   - pytest --cov=sumeval tests/test_*
 after_success:
   codecov
+deploy:
+  provider: pypi
+  user: "icoxfog417"
+  password:
+    secure: O3zmKefgHI+UNvgtZ/Fe/htgnP+yLXbMFfLIOF3VN9ofCyTXhjueBG+t6l9cetzICPfOMf2LjYCeamgr8DiV9xbtT5IWPOsU5qJYq8guOpYZ3Qpy0jIE7jE8uURCLBM1vdfpf6Gc+FI+NKj01K/xrX2Fh5kT90TMXN2lPFrd7SkYBWTdyZsOheUFSE8YinSx+TSaiWBohc+IaqGuUvmIA12i2a1narvaB86WWhAIY+BqJYCPdZg+++xqsMixSUDhwZgi30k1LDxzUKvz+fFUCyvTkyr8hO+CeE+d+jyY+GuD0XMQMM0OcWK0gKYgO89kvYv7h8bIKc03jPESECEGQTXYqrt486Notkm+v4DOrT52Owgx2ZsuNicb+5v6u5Mb7aD36kMrgO9BvTvtPlgiGAB+UUY1kzcgFRYgsSN5mvz9EAnq6Efxq2/1aQV3MwJE1FD6EUuzzJaWSR5+8pfe9NL8vjle7qGp/aSxEzbJPuzVMe6n/1+z26RNozkHysZRnaKGvh0WypvkjoU2lJB8Lx8buOBURy0K778/PLljEDxVwB8HriW92EwyjcfaCitekCGTjGicYWj0lmyJJo05CaNAMGqGXx03Q1zZth1ilnXXpoBez37Dx4Q4oxR1UpsIp0POKfX1cg8MCUiN3xYVSGD+znH4uNazs9vHkrNEiII=
+  on:
+    tags: true

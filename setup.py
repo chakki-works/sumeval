@@ -21,13 +21,14 @@ def get_lang_data():
 
 setup(
     name="sumeval",
-    version="0.2.1",
     description="Well tested evaluation framework for Text summarization",
     url="https://github.com/chakki-works/sumeval",
     author="icoxfog417",
     author_email="icoxfog417@yahoo.co.jp",
     license="Apache License 2.0",
     keywords="text summarization machine learning",
+    use_scm_version=True,
+    setup_requires=["setuptools_scm"],
     packages=[
         "sumeval",
         "sumeval.cli",
