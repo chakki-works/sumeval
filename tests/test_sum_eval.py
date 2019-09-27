@@ -1,8 +1,21 @@
 import os
 import sys
-import plac
-from sumeval.cli.sum_eval import entry_point
+import unittest
+from sumeval.cli.sum_eval import main
 
 
-if __name__ == "__main__":
-    entry_point()
+class TestSumEval(unittest.TestCase):
+
+    def test_sum_eval(self):
+        result = main(
+                "r-nlb",
+                False,
+                False,
+                False,
+                -1,
+                -1,
+                0.5,
+                "en",
+                "I'm living New York its my home town so awesome",
+                "My home town is awesome",
+            )
