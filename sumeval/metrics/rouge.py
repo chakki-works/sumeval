@@ -132,7 +132,8 @@ class RougeCalculator():
         Returns
         -------
         score: float
-            measured score
+            Measured score. The way of measuring is specified by self.measure
+            and should be one of the recall, precision, f1
         """
         _summary = self.tokenize(summary)
         summary_ngrams = self.count_ngrams(_summary, n)
