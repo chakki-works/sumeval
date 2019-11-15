@@ -14,6 +14,7 @@ class TestSumEval(unittest.TestCase):
                 False,
                 -1,
                 -1,
+                "f1",
                 0.5,
                 "en",
                 "I'm living New York its my home town so awesome",

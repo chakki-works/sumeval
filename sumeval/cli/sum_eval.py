@@ -13,6 +13,7 @@ def main(
     stemming: ("use stemming", "flag", "st"),
     word_limit: ("word limit count", "option", "wl") = -1,
     length_limit: ("sentence limit length", "option", "ll") = -1,
+    measure: ("measuring method of score in ROUGE", "option", "mm") = 'f1',
     alpha: ("alpha for f1-score", "option") = 0.5,
     language: ("word limit count", "option", "la") = "en",
     *params):
@@ -57,7 +58,7 @@ def main(
         scorer = RougeCalculator(
             stopwords=stopwords, stemming=stemming,
             word_limit=word_limit, length_limit=length_limit,
-            lang=language)
+            measure=measure, lang=language)
 
         for s, rs in generator:
             score = {}

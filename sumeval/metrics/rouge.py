@@ -7,11 +7,13 @@ class RougeCalculator():
 
     def __init__(self,
                  stopwords=True, stemming=False,
-                 word_limit=-1, length_limit=-1, lang="en"):
+                 word_limit=-1, length_limit=-1,
+                 measure='f1', lang="en"):
         self.stemming = stemming
         self.stopwords = stopwords
         self.word_limit = word_limit
         self.length_limit = length_limit
+        self.measure = measure.lower()
         if isinstance(lang, str):
             self.lang = lang
             self._lang = get_lang(lang)
@@ -129,8 +131,8 @@ class RougeCalculator():
 
         Returns
         -------
-        f1: float
-            f1 score
+        score: float
+            measured score
         """
         _summary = self.tokenize(summary)
         summary_ngrams = self.count_ngrams(_summary, n)
@@ -143,16 +145,24 @@ class RougeCalculator():
             matches += self.count_overlap(summary_ngrams, r_ngrams)
             count_for_recall += self.len_ngram(_r, n)
         count_for_prec = len(_refs) * self.len_ngram(_summary, n)
-        f1 = self._calc_f1(matches, count_for_recall, count_for_prec, alpha)
-        return f1
+        score = self._calc_score(matches, count_for_recall, count_for_prec, alpha)
+        return score
 
-    def _calc_f1(self, matches, count_for_recall, count_for_precision, alpha):
+    def _calc_score(self, matches, count_for_recall, count_for_precision, alpha):
         def safe_div(x1, x2):
             return 0 if x2 == 0 else x1 / x2
-        recall = safe_div(matches, count_for_recall)
-        precision = safe_div(matches, count_for_precision)
-        denom = (1.0 - alpha) * precision + alpha * recall
-        return safe_div(precision * recall, denom)
+        if self.measure == 'recall':
+            recall = safe_div(matches, count_for_recall)
+            return recall
+        if self.measure == "precision":
+            precision = safe_div(matches, count_for_precision)
+            return precision
+        if self.measure == "f1":
+            precision = safe_div(matches, count_for_precision)
+            recall = safe_div(matches, count_for_recall)
+            denom = (1.0 - alpha) * precision + alpha * recall
+            return safe_div(precision * recall, denom)
+        raise ValueError(f"measure option should be recall, precision, or f1 but got {self.measure}")
 
     def lcs(self, a, b):
         longer = a
@@ -208,8 +218,8 @@ class RougeCalculator():
             matches += self.lcs(_r, _summary)
             count_for_recall += len(_r)
         count_for_prec = len(_refs) * len(_summary)
-        f1 = self._calc_f1(matches, count_for_recall, count_for_prec, alpha)
-        return f1
+        score = self._calc_score(matches, count_for_recall, count_for_prec, alpha)
+        return score
 
     def count_be(self, text, compare_type, is_reference=False):
         bes = self.parse_to_be(text, is_reference)
@@ -253,5 +263,5 @@ class RougeCalculator():
             matches += self.count_overlap(s_bes, r_bes)
             count_for_recall += sum(r_bes.values())
         count_for_prec = len(_refs) * sum(s_bes.values())
-        f1 = self._calc_f1(matches, count_for_recall, count_for_prec, alpha)
-        return f1
+        score = self._calc_score(matches, count_for_recall, count_for_prec, alpha)
+        return score
