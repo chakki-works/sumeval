@@ -14,7 +14,7 @@
 
 * Well tested
   * The ROUGE-X scores are tested compare with [original Perl script (ROUGE-1.5.5.pl)](https://github.com/summanlp/evaluation).
-  * The BLEU score is calculated by [SacréBLEU](https://github.com/awslabs/sockeye/tree/master/contrib/sacrebleu), that produces the same values as official script (`mteval-v13a.pl`) used by WMT.
+  * The BLEU score is calculated by [SacréBLEU](https://github.com/mjpost/sacrebleu), that produces the same values as official script (`mteval-v13a.pl`) used by WMT.
 * Multi-language
   * Not only English, Japanese are also supported. The other language is extensible [easily](https://github.com/chakki-works/sumeval#welcome-contribution-tada).
 
