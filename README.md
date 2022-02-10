@@ -113,7 +113,7 @@ pip install sumeval
 
 ## Dependencies
 
-* BLEU is depends on [SacréBLEU](https://github.com/awslabs/sockeye/tree/master/contrib/sacrebleu)
+* BLEU is depends on [SacréBLEU](https://github.com/mjpost/sacrebleu)
 * To calculate `ROUGE-BE`, [`spaCy`](https://github.com/explosion/spaCy) is required.
 * To use lang `ja`, [`janome`](https://github.com/mocobeta/janome) or [`MeCab`](https://github.com/taku910/mecab) is required.
   * Especially to get score of `ROUGE-BE`, [`GiNZA`](https://github.com/megagonlabs/ginza) is needed additionally.
