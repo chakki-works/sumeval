@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        python-version:
+          - "3.6"
+          - "3.7"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python --version
+      - run: sudo apt-get install -y libxml-parser-perl
+      - run: pip install -r requirements-test.txt
+      - run: python -m spacy download en
+      - run: pip install "https://github.com/megagonlabs/ginza/releases/download/latest/ginza-latest.tar.gz"
+      - run: pytest --cov=sumeval tests/test_*
+      - run: codecov
+      - if: startsWith(github.ref, 'refs/tags/')
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: "icoxfog417"
+          password: ${{ secrets.PYPI_PASSWORD }}
